@@ -16,17 +16,13 @@
       "type": "email",
       "required": true
     },
-    "orderid": {
-      "type": "uid",
-      "required": true
-    },
     "paymentinfo": {
       "type": "json",
       "required": false
     },
     "Products": {
       "type": "json",
-      "required": true
+      "required": false
     },
     "addressLine1": {
       "type": "string",
@@ -55,10 +51,6 @@
       "type": "string",
       "required": true
     },
-    "transactionid": {
-      "type": "uid",
-      "required": true
-    },
     "amount": {
       "type": "decimal",
       "required": true
@@ -66,6 +58,20 @@
     "statusofpayment": {
       "type": "string",
       "required": true
+    },
+    "orderid": {
+      "type": "string",
+      "required": true
+    },
+    "apartmentorblock": {
+      "type": "string"
+    },
+    "transactionid": {
+      "type": "string",
+      "required": true
+    },
+    "alternatephonenumber": {
+      "type": "string"
     }
   }
 }

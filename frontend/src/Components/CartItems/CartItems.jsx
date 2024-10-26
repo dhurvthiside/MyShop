@@ -3,19 +3,23 @@ import './CartItems.css';
 import { ShopContext } from '../../Context/ShopContext';
 import remove_icon from '../Assets/cart_cross_icon.png';
 import qr_code from '../Assets/qr.jpg';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const CartItems = () => {
+  const navigate = useNavigate();
   const { getTotalCartAmount, all_product, cartItems, removeFromCart, clearCart } = useContext(ShopContext);
   const [showCheckout, setShowCheckout] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
   const checkoutRef = useRef(null);
   const paymentRef = useRef(null);
 
-  // State to manage form fields
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     altPhone: '',
+    email: '',
     address1: '',
     address2: '',
     apartment: '',
@@ -23,6 +27,8 @@ const CartItems = () => {
     state: '',
     pincode: '',
   });
+
+  const token = '741aeedb9814ad3c211c98a1bd5fe35e82e0cdef52654110f79fb33f7a40161ed51d53b5275e117ed314ef3716ea33ee4600931b2362f770515eb8781b540a6afd3a3faf643ffe3c46f92e8b25cb456b7824ee9b68f6a0560aafa93bab5dafac353a5551dffcf44d5fd00533fdde805cd0b10a7785d2a7d7a212d7f2414b8aa2';
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -48,7 +54,7 @@ const CartItems = () => {
   };
 
   const handleProceedToPayment = () => {
-    const requiredFields = ['name', 'phone', 'address1', 'city', 'state', 'pincode'];
+    const requiredFields = ['name', 'phone', 'address1', 'city', 'state', 'pincode', 'email'];
     const allFieldsFilled = requiredFields.every(field => formData[field].trim() !== '');
 
     if (allFieldsFilled) {
@@ -58,18 +64,80 @@ const CartItems = () => {
     }
   };
 
-  const handlePaymentCompleted = () => {
-    clearCart();
-    setShowCheckout(false);
-    setShowPayment(false);
-    window.location.href = '/'; // Replace with the actual route to your shop page
+  const generateOrderId = () => {
+    return `order${Math.floor(100000 + Math.random() * 900000)}`;
   };
 
-  // Helper function to get product image URL
+
+  const handlePaymentCompleted = async () => {
+    // Check if the cart is empty
+    const isCartEmpty = all_product.every(product => cartItems[product.id] <= 0);
+
+    if (isCartEmpty) {
+      alert('Your cart is empty. Please add items to the cart and try again.'); // Show an error message
+      return; // Exit the function if the cart is empty
+    }
+
+    const orderData = {
+      data: {
+        email: formData.email,
+        orderid: generateOrderId(),
+        paymentinfo: {},
+        Products: all_product
+          .filter(product => cartItems[product.id] > 0)
+          .map(product => ({
+            title: product.title,
+            price: product.price,
+            quantity: cartItems[product.id],
+            productid: product.id,
+          })),
+        addressLine1: formData.address1,
+        addressLine2: formData.address2 || null,
+        city: formData.city,
+        state: formData.state,
+        pincode: formData.pincode,
+        name: formData.name,
+        phonenumber: formData.phone,
+        transactionid: `txn_${generateOrderId()}`,
+        amount: getTotalCartAmount(),
+        statusofpayment: "Pending",
+        alternatephonenumber: formData.altPhone || null,
+        apartmentorblock: formData.apartment || null,
+      }
+    };
+
+    try {
+      const response = await fetch('http://localhost:1337/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(orderData)
+      });
+
+      if (response.ok) {
+        clearCart();
+        setShowCheckout(false);
+        setShowPayment(false);
+        navigate('/order-success'); // Redirect to OrderSuccess page on success
+      } else {
+        const errorData = await response.json();
+        console.error('Failed to complete the order:', errorData);
+        alert('Failed to complete the order. Please check order details and try again.');
+      }
+    } catch (error) {
+      console.error('Error completing the order:', error);
+      alert('An error occurred while processing your order.');
+    }
+  };
+
+
+
   const getImageUrl = (images) => {
     return images && images.length > 0 && images[0].formats.small.url
       ? `${process.env.REACT_APP_STRAPI_BASE_URL}${images[0].formats.small.url}`
-      : 'fallback_image_url_here'; // Replace with actual fallback image
+      : 'fallback_image_url_here';
   };
 
   return (
@@ -85,16 +153,12 @@ const CartItems = () => {
       <hr />
       {all_product && all_product.map((product) => {
         if (cartItems[product.id] > 0) {
-          const productImageUrl = getImageUrl(product.image); // Use the helper function
+          const productImageUrl = getImageUrl(product.image);
 
           return (
             <div key={product.id}>
               <div className="cartitems-format cartitems-format-main">
-                <img
-                  src={productImageUrl}
-                  alt={product.title}
-                  className="carticon-product-icon"
-                />
+                <img src={productImageUrl} alt={product.title} className="carticon-product-icon" />
                 <p>{product.title}</p>
                 <p>₹{product.price}</p>
                 <button className="cartitems-quantity">{cartItems[product.id]}</button>
@@ -155,6 +219,18 @@ const CartItems = () => {
                 type="text"
                 name="name"
                 value={formData.name}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>
+                Email <span>*</span>
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
                 onChange={handleInputChange}
                 required
               />
@@ -236,7 +312,7 @@ const CartItems = () => {
             </div>
             <div className="form-group">
               <label>
-                PinCode <span>*</span>
+                Pincode <span>*</span>
               </label>
               <input
                 type="text"
@@ -246,8 +322,10 @@ const CartItems = () => {
                 required
               />
             </div>
+            <button type="button" className="proceed-to-payment-button" onClick={handleProceedToPayment}>
+              Proceed to Payment
+            </button>
           </form>
-          <button onClick={handleProceedToPayment} className="proceed-to-payment-button">PROCEED TO PAYMENT</button>
         </div>
       )}
 

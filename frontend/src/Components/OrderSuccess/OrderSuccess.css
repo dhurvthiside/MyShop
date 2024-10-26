@@ -1,0 +1,23 @@
+.order-success-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f8f9fa;
+    color: #333;
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  .order-success-container h1 {
+    font-size: 2.5rem;
+    color: #28a745;
+    margin-bottom: 20px;
+  }
+  
+  .order-success-container p {
+    font-size: 1.2rem;
+    color: #666;
+  }
+  

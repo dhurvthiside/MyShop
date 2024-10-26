@@ -805,9 +805,8 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
   };
   attributes: {
     email: Schema.Attribute.Email & Schema.Attribute.Required;
-    orderid: Schema.Attribute.UID & Schema.Attribute.Required;
     paymentinfo: Schema.Attribute.JSON;
-    Products: Schema.Attribute.JSON & Schema.Attribute.Required;
+    Products: Schema.Attribute.JSON;
     addressLine1: Schema.Attribute.String & Schema.Attribute.Required;
     addressLine2: Schema.Attribute.Text;
     city: Schema.Attribute.String & Schema.Attribute.Required;
@@ -815,9 +814,12 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
     pincode: Schema.Attribute.String & Schema.Attribute.Required;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     phonenumber: Schema.Attribute.String & Schema.Attribute.Required;
-    transactionid: Schema.Attribute.UID & Schema.Attribute.Required;
     amount: Schema.Attribute.Decimal & Schema.Attribute.Required;
     statusofpayment: Schema.Attribute.String & Schema.Attribute.Required;
+    orderid: Schema.Attribute.String & Schema.Attribute.Required;
+    apartmentorblock: Schema.Attribute.String;
+    transactionid: Schema.Attribute.String & Schema.Attribute.Required;
+    alternatephonenumber: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
