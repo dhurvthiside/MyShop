@@ -1,0 +1,77 @@
+.new-collections {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px 0;
+    background-color: #F5F0E1; /* Background color similar to the one in the screenshot */
+    padding: 40px 0;
+}
+
+.new-collections h1 {
+    font-size: 36px;
+    font-weight: 600;
+    color: #5D4037; /* Adjusted to match the earthy tones in the design */
+    margin-bottom: 30px;
+}
+
+.new-collections-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    flex-wrap: wrap; /* Ensure it wraps for small screens */
+}
+
+.new-collection-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 250px;
+    margin-bottom: 20px;
+}
+
+.collection-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.collection-content img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid #5D4037; /* Border color matching the heading */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.collection-content img:hover {
+    transform: scale(1.1); /* Adds a zoom effect on hover */
+}
+
+.collection-content span {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #5D4037;
+}
+
+/* Media queries to handle smaller screens */
+@media (max-width: 768px) {
+    .new-collections h1 {
+        font-size: 28px;
+    }
+
+    .new-collections-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .collection-content img {
+        width: 150px;
+        height: 150px;
+    }
+}

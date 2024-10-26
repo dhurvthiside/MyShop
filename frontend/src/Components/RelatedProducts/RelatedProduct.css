@@ -1,0 +1,67 @@
+.relatedproducts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Maintain the vertical gap */
+}
+
+.relatedproducts h1 {
+    color: #171717;
+    font-size: 50px;
+    font-weight: 600;
+}
+
+.relatedproducts hr {
+    width: 200px;
+    height: 6px;
+    border-radius: 10px;
+    background: #252525; 
+}
+
+.relatedproducts-item {
+    margin-top: 20px; /* Maintain top margin */
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    gap: 20px; /* Keep the gap between items */
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+}
+
+.relatedproduct-wrapper {
+    flex: 1 1 calc(25% - 20px); /* Allow up to four items per row, accounting for gaps */
+    max-width: 240px; /* Increase max-width for the wrapper */
+    margin: 10px 0; /* Maintain vertical margins */
+    box-sizing: border-box; /* Include padding/border in total width and height */
+    text-align: center; /* Center text alignment for title and price */
+    transition: transform 0.2s; /* Add a subtle hover effect */
+}
+
+.relatedproduct-wrapper:hover {
+    transform: scale(1.05); /* Scale up on hover */
+}
+
+.relatedproduct-wrapper img {
+    width: 100%; /* Make image responsive */
+    height: auto; /* Maintain aspect ratio */
+    max-width: 180px; /* Increase max-width for better visibility */
+    border-radius: 10px; /* Add rounded corners to images */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+}
+
+.relatedproduct-wrapper h2 { /* Assuming title is in an h2 tag */
+    font-size: 18px; /* Set title font size */
+    font-weight: 600; /* Bold for emphasis */
+    margin: 5px 0; /* Add margin for spacing */
+    color: #252525; /* Set a distinct color for the title */
+}
+
+.relatedproduct-wrapper .item-price { /* Assuming price is in a separate class */
+    color: #374151; /* Set a color for the price */
+    font-size: 16px; /* Set font size for the price */
+    font-weight: 500; /* Regular font weight */
+    margin-top: 5px; /* Add margin to separate from title */
+    display: inline-block; /* Make it inline for better spacing */
+    background-color: #f9f9f9; /* Background color for price box */
+    padding: 5px 10px; /* Padding for the price box */
+    border-radius: 5px; /* Rounded corners for the price box */
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}

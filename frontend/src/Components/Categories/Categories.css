@@ -1,0 +1,54 @@
+.categories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px 0;
+    background-color: #F3ECE1; /* Adjust background to match the design */
+    padding: 20px;
+}
+
+.categories h2 {
+    font-size: 36px;
+    font-weight: 600;
+    color: #6E4A35; /* Adjusted heading color */
+    margin-bottom: 40px;
+}
+
+.categories-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Spacing between items */
+    width: 100%;
+    max-width: 1400px; /* Ensure it fits nicely within your container */
+}
+
+.category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #6E4A35; /* Text color matching heading */
+    width: 100%;
+    transition: transform 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.category-item img {
+    width: 220px; /* Adjust image size */
+    height: 220px;
+    border-radius: 15px; /* Make images slightly rounded to match design */
+    object-fit: cover;
+    border: none;
+    transition: transform 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.category-item:hover img {
+    transform: scale(1.1); /* Scale up image on hover */
+}
+
+.category-item span {
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    color: #6E4A35;
+}

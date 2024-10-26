@@ -4,7 +4,7 @@
   "info": {
     "singularName": "category",
     "pluralName": "categories",
-    "displayName": "Category",
+    "displayName": "Category Main Images",
     "description": "Organize your content into categories"
   },
   "options": {
@@ -12,20 +12,25 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
-      "type": "string"
+    "categoryname": {
+      "type": "enumeration",
+      "enum": [
+        "Earrings",
+        "Rings",
+        "Bracelet",
+        "Necklace",
+        "Accessories"
+      ],
+      "required": true
     },
-    "slug": {
-      "type": "uid"
-    },
-    "articles": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::article.article",
-      "mappedBy": "category"
-    },
-    "description": {
-      "type": "text"
+    "categoryimage": {
+      "allowedTypes": [
+        "images",
+        "files"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
     }
   }
 }

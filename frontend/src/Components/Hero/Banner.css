@@ -1,0 +1,39 @@
+.banner {
+  position: relative; /* Allows absolute positioning for child elements */
+  width: 100%; /* Full width of the parent container */
+  overflow: hidden; /* Hides any overflow from the images */
+}
+
+.banner-image {
+  width: 100%; /* Ensures the image takes the full width of the container */
+  height: 350px; /* Fixed height for the banner images */
+  display: block; /* Ensures the image is treated as a block-level element */
+  object-fit: cover; /* Maintains aspect ratio and covers the area */
+}
+
+.banner-dots {
+  position: absolute; /* Positioned relative to .banner */
+  bottom: 10px; /* Distance from the bottom of the banner */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Adjusts for centering */
+  display: flex; /* Flex container for arranging dots */
+  gap: 10px; /* Space between dots */
+}
+
+.banner-dot {
+  width: 10px; /* Width of the dots */
+  height: 10px; /* Height of the dots */
+  background-color: #bbb; /* Default background color for inactive dots */
+  border-radius: 50%; /* Makes dots circular */
+  cursor: pointer; /* Changes cursor to pointer on hover */
+  transition: background-color 0.3s; /* Smooth transition for hover effects */
+}
+
+.banner-dot.active {
+  background-color: #333; /* Background color for the active dot */
+}
+
+/* Optional: Hover effect for dots */
+.banner-dot:hover {
+  background-color: #888; /* Change color on hover */
+}

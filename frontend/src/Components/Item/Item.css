@@ -1,0 +1,60 @@
+.item {
+    width: 280px;
+    text-align: center; /* Center-align text */
+    transition: transform 0.6s; /* Transition effect */
+}
+
+.item img {
+    width: 100%; /* Make the image responsive */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Rounded corners for the image */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+}
+
+.item-title {
+    margin: 10px 0 5px; /* Adjust margin for spacing */
+    font-size: 16px; /* Title font size */
+    font-weight: 600; /* Bold title */
+    color: #171717; /* Dark text color */
+}
+
+.item-prices {
+    display: flex;
+    justify-content: center; /* Center-align price */
+    align-items: center; /* Center-align items vertically */
+    margin-top: 5px; /* Space between title and price */
+}
+
+.item-price {
+    color: #374151; /* Set a color for the price */
+    font-size: 18px; /* Font size for the price */
+    font-weight: 500; /* Regular font weight */
+}
+
+.item:hover {
+    transform: scale(1.05); /* Scale effect on hover */
+}
+
+@media (max-width: 1280px) {
+    .item {
+        width: 220px; /* Responsive width */
+    }
+}
+
+@media (max-width: 1024px) {
+    .item {
+        width: 170px; /* Responsive width */
+    }
+}
+
+@media (max-width: 800px) {
+    .item {
+        width: 120px; /* Responsive width */
+    }
+}
+
+@media (max-width: 500px) {
+    .item {
+        width: 160px; /* Responsive width */
+    }
+}

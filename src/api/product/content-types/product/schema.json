@@ -4,18 +4,92 @@
   "info": {
     "singularName": "product",
     "pluralName": "products",
-    "displayName": "product"
+    "displayName": "product",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "Name": {
+    "title": {
       "type": "string",
       "required": true,
       "maxLength": 100,
       "minLength": 3
+    },
+    "slug": {
+      "type": "string",
+      "required": true,
+      "maxLength": 110,
+      "minLength": 3,
+      "unique": true
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "Necklace",
+        "Earrings",
+        "Bracelet",
+        "Rings",
+        "Accessories"
+      ],
+      "default": "Necklace",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "image": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "collection": {
+      "type": "enumeration",
+      "enum": [
+        "Faux Polki",
+        "Faux Diamond",
+        "Temple",
+        "Oxidised Silver"
+      ]
+    },
+    "category2": {
+      "type": "enumeration",
+      "enum": [
+        "null",
+        "Under 5k"
+      ],
+      "default": "null",
+      "required": true
+    },
+    "style": {
+      "type": "enumeration",
+      "enum": [
+        "null",
+        "Modern",
+        "Ethnic"
+      ],
+      "default": "null",
+      "required": true
+    },
+    "price": {
+      "type": "decimal",
+      "required": true,
+      "min": 20
+    },
+    "availableQty": {
+      "type": "integer",
+      "min": 0,
+      "required": true,
+      "private": true
+    },
+    "productId": {
+      "type": "integer"
     }
   }
 }

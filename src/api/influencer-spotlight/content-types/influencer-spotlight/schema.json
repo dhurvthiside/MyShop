@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "influencer_spotlights",
+  "info": {
+    "singularName": "influencer-spotlight",
+    "pluralName": "influencer-spotlights",
+    "displayName": "Influencer Spotlight"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "influencerimages": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    }
+  }
+}

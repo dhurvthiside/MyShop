@@ -544,7 +544,6 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     slug: Schema.Attribute.UID<'title'>;
     cover: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
     author: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
-    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
     blocks: Schema.Attribute.DynamicZone<
       ['shared.media', 'shared.quote', 'shared.rich-text', 'shared.slider']
     >;
@@ -601,17 +600,19 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   info: {
     singularName: 'category';
     pluralName: 'categories';
-    displayName: 'Category';
+    displayName: 'Category Main Images';
     description: 'Organize your content into categories';
   };
   options: {
     draftAndPublish: false;
   };
   attributes: {
-    name: Schema.Attribute.String;
-    slug: Schema.Attribute.UID;
-    articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
-    description: Schema.Attribute.Text;
+    categoryname: Schema.Attribute.Enumeration<
+      ['Earrings', 'Rings', 'Bracelet', 'Necklace', 'Accessories']
+    > &
+      Schema.Attribute.Required;
+    categoryimage: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -623,6 +624,74 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::category.category'
+    > &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCategoryBannerCategoryBanner
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'category_banners';
+  info: {
+    singularName: 'category-banner';
+    pluralName: 'category-banners';
+    displayName: 'Category Banner';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    categorybannerimage: Schema.Attribute.Media<'images', true> &
+      Schema.Attribute.Required;
+    categoryname: Schema.Attribute.Enumeration<
+      ['earrings', 'necklace', 'bracelet', 'rings', 'accessories']
+    > &
+      Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category-banner.category-banner'
+    > &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCollectionMainImageCollectionMainImage
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'collection_main_images';
+  info: {
+    singularName: 'collection-main-image';
+    pluralName: 'collection-main-images';
+    displayName: 'Collection Main Image';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    collectionname: Schema.Attribute.Enumeration<
+      ['Faux Polki', 'Faux Diamond', 'Temple', 'Oxidised Silver']
+    >;
+    collectionimage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::collection-main-image.collection-main-image'
     > &
       Schema.Attribute.Private;
   };
@@ -660,23 +729,168 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiInfluencerSpotlightInfluencerSpotlight
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'influencer_spotlights';
+  info: {
+    singularName: 'influencer-spotlight';
+    pluralName: 'influencer-spotlights';
+    displayName: 'Influencer Spotlight';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    influencerimages: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::influencer-spotlight.influencer-spotlight'
+    > &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiMainBannerMainBanner extends Struct.CollectionTypeSchema {
+  collectionName: 'main_banners';
+  info: {
+    singularName: 'main-banner';
+    pluralName: 'main-banners';
+    displayName: 'Main Banner';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    bannerimages: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::main-banner.main-banner'
+    > &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
+  collectionName: 'orders';
+  info: {
+    singularName: 'order';
+    pluralName: 'orders';
+    displayName: 'order';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    email: Schema.Attribute.Email & Schema.Attribute.Required;
+    orderid: Schema.Attribute.UID & Schema.Attribute.Required;
+    paymentinfo: Schema.Attribute.JSON;
+    Products: Schema.Attribute.JSON & Schema.Attribute.Required;
+    addressLine1: Schema.Attribute.String & Schema.Attribute.Required;
+    addressLine2: Schema.Attribute.Text;
+    city: Schema.Attribute.String & Schema.Attribute.Required;
+    state: Schema.Attribute.String & Schema.Attribute.Required;
+    pincode: Schema.Attribute.String & Schema.Attribute.Required;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    phonenumber: Schema.Attribute.String & Schema.Attribute.Required;
+    transactionid: Schema.Attribute.UID & Schema.Attribute.Required;
+    amount: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    statusofpayment: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::order.order'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   collectionName: 'products';
   info: {
     singularName: 'product';
     pluralName: 'products';
     displayName: 'product';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    Name: Schema.Attribute.String &
+    title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
         minLength: 3;
         maxLength: 100;
       }>;
+    slug: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 3;
+        maxLength: 110;
+      }>;
+    category: Schema.Attribute.Enumeration<
+      ['Necklace', 'Earrings', 'Bracelet', 'Rings', 'Accessories']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Necklace'>;
+    description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images' | 'files', true> &
+      Schema.Attribute.Required;
+    collection: Schema.Attribute.Enumeration<
+      ['Faux Polki', 'Faux Diamond', 'Temple', 'Oxidised Silver']
+    >;
+    category2: Schema.Attribute.Enumeration<['null', 'Under 5k']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'null'>;
+    style: Schema.Attribute.Enumeration<['null', 'Modern', 'Ethnic']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'null'>;
+    price: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 20;
+        },
+        number
+      >;
+    availableQty: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.Private &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    productId: Schema.Attribute.Integer;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -1079,7 +1293,12 @@ declare module '@strapi/strapi' {
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
+      'api::category-banner.category-banner': ApiCategoryBannerCategoryBanner;
+      'api::collection-main-image.collection-main-image': ApiCollectionMainImageCollectionMainImage;
       'api::global.global': ApiGlobalGlobal;
+      'api::influencer-spotlight.influencer-spotlight': ApiInfluencerSpotlightInfluencerSpotlight;
+      'api::main-banner.main-banner': ApiMainBannerMainBanner;
+      'api::order.order': ApiOrderOrder;
       'api::product.product': ApiProductProduct;
       'admin::permission': AdminPermission;
       'admin::user': AdminUser;
